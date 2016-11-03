@@ -1,0 +1,69 @@
+<html>
+
+<head>
+    <title>The jQuery Example</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+        var maxAge = 0
+         $(document).ready(function(){
+             $("#callrest").click(function(){
+                 jQuery.support.cors = true;
+                 // AJAX Code
+                 $.ajax(
+                {
+                    type:'GET',
+                    url: "http://localhost:3000/cachetest" ,
+                    data: "{}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType:  "json",
+                    success: function (data,status,xhr) {
+                    
+                        if(maxAge <=0){
+                            maxAge = extractMaxAge(xhr.getResponseHeader('Cache-Control'))
+                            startTime()
+                        }
+                        $('#countervalue').text("Counter="+data.counter)
+                        $('#dataarea').val(JSON.stringify(data))
+                        $('#headers').val(xhr.getResponseHeader('Cache-Control'))
+                    },
+                    error: function (msg, url, line) {
+                        alert('error '+msg+ "    "+url+"    "+line)
+
+                    }
+                });
+             });
+        });
+
+        function extractMaxAge(cacheHeader){
+            var index = cacheHeader.indexOf("max-age=")
+            var val = cacheHeader.substring(index+"max-age=".length)
+            return val
+        }
+
+        function startTime() {
+            
+            if (maxAge <= 0){
+                $('#expiring').text('Cache expired')
+            } else {
+                $('#expiring').text('Cache expiring in: '+maxAge+' secs')
+                maxAge--
+                var t = setTimeout(startTime, 1000);
+            }
+        }
+
+      </script>
+
+</head>
+
+<body>
+    <button id="callrest">Call REST</button>
+    <p id="expiring"></p>
+    <h3 id="countervalue">Counter=</h3>
+    <textarea cols="50" rows="5" id="dataarea"></textarea>
+    <h4>HTTP Header</h4>
+    <textarea cols="50" rows="5" id="headers"></textarea>
+</body>
+
+</html>
