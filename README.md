@@ -15,6 +15,6 @@ Based on the max-age setup when you will hit the "Call REST"
       *or* Get the data from the browser cache
 
 In order to understand the behavior
-1. Change the maxAge in server.js to different values, keep in mind value is in seconds
+1. Change the MAX_AGE in server.js to different values, keep in mind value is in seconds
 2. Restart the server
 3. Hit the "Call REST" on browser
