@@ -1,6 +1,6 @@
-This demo code is part of the REST-API course
-
-http://www.acloudfan.com/learn-REST-API
+# Created as part of the course on "REST API". 
+# http://www.acloudfan.com/learn-REST-API
+# Demonstrates the setting up of URI for the REST API
 
 This is to demostrate the use of the Cache-Control header
 To try it out, setup the application
